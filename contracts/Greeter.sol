@@ -2,11 +2,7 @@
 pragma solidity 0.8.16;
 
 contract Greeter {
-    string private greeting;
-
-    constructor(string memory _greeting) {
-        greeting = _greeting;
-    }
+    string private greeting = "Hello, World!";
 
     function getGreeting() public view returns (string memory) {
         return greeting;

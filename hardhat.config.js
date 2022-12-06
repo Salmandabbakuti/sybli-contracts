@@ -21,10 +21,26 @@ task("accounts", "Prints the list of accounts with balances", async () => {
 });
 
 task("deploy", "Deploys Contract", async () => {
-  const contractFactory = await ethers.getContractFactory("Greeter");
-  const contract = await contractFactory.deploy("Hello, Hardhat!");
-  await contract.deployed();
-  console.log("contract deployed at:", contract.address);
+  const deployerContractFactory = await ethers.getContractFactory("Deployer");
+  const deployerContract = await deployerContractFactory.deploy();
+  await deployerContract.deployed();
+  console.log("deployer contract deployed at:", deployerContract.address);
+
+  // deployer contract instance at address
+  // const deployerContract = await ethers.getContractAt("Deployer", "0x694b907c9F189660FF0fDafaDf5Ba2F6A521715e");
+
+
+
+  // get bytecode of greeter contract
+  const greeterContractFactory = await ethers.getContractFactory("Greeter");
+  const bytecode = greeterContractFactory.bytecode;
+
+  // deploy greeter contract with salt
+  const tx = await deployerContract.deployGreeter(bytecode, 12);
+  // get returned contract address
+  const receipt = await tx.wait();
+  const deployedContractAddress = receipt.events[0].args[0];
+  console.log("greeter contract deployed at:", deployedContractAddress);
 });
 
 task("balance", "Prints an account's balance")
