@@ -21,22 +21,23 @@ task("accounts", "Prints the list of accounts with balances", async () => {
 });
 
 task("deploy", "Deploys Contract", async () => {
-  const deployerContractFactory = await ethers.getContractFactory("Deployer");
-  const deployerContract = await deployerContractFactory.deploy();
-  await deployerContract.deployed();
-  console.log("deployer contract deployed at:", deployerContract.address);
+  // uncomment to deploy deployer contract or use the deployed one at address: Goerli or Mumbai
+  // const deployerContractFactory = await ethers.getContractFactory("Deployer");
+  // const deployerContract = await deployerContractFactory.deploy();
+  // await deployerContract.deployed();
+  // console.log("deployer contract deployed at:", deployerContract.address);
 
-  // deployer contract instance at address
-  // const deployerContract = await ethers.getContractAt("Deployer", "0x694b907c9F189660FF0fDafaDf5Ba2F6A521715e");
+  // deployer contract instance at address: Goerli or Mumbai
+  const deployerContract = await ethers.getContractAt("Deployer", "0x22A640e326575A2C595A40e346783F96d576b6dA"); // ==> goerli and mumbai
 
 
 
-  // get bytecode of greeter contract
+  // // get bytecode of greeter contract
   const greeterContractFactory = await ethers.getContractFactory("Greeter");
   const bytecode = greeterContractFactory.bytecode;
 
   // deploy greeter contract with salt
-  const tx = await deployerContract.deployGreeter(bytecode, 12);
+  const tx = await deployerContract.deployContract(bytecode, 12);
   // get returned contract address
   const receipt = await tx.wait();
   const deployedContractAddress = receipt.events[0].args[0];
