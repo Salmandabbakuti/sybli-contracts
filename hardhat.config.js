@@ -21,7 +21,7 @@ task("accounts", "Prints the list of accounts with balances", async () => {
 });
 
 task("deploy", "Deploys Contract", async () => {
-  // uncomment to deploy deployer contract or use the deployed one at address: Goerli or Mumbai
+  // uncomment to deploy deployer contract or use the deployed one at address: 0x22A640e326575A2C595A40e346783F96d576b6dA (goerli and mumbai)
   // const deployerContractFactory = await ethers.getContractFactory("Deployer");
   // const deployerContract = await deployerContractFactory.deploy();
   // await deployerContract.deployed();
@@ -30,9 +30,7 @@ task("deploy", "Deploys Contract", async () => {
   // deployer contract instance at address: Goerli or Mumbai
   const deployerContract = await ethers.getContractAt("Deployer", "0x22A640e326575A2C595A40e346783F96d576b6dA"); // ==> goerli and mumbai
 
-
-
-  // // get bytecode of greeter contract
+  // get bytecode of greeter contract
   const greeterContractFactory = await ethers.getContractFactory("Greeter");
   const bytecode = greeterContractFactory.bytecode;
 
